@@ -1,0 +1,95 @@
+#!/bin/sh
+
+source $XDG_CONFIG_HOME/panel/config
+source $XDG_CONFIG_HOME/panel/colors
+
+panel_workspaces() {
+	desktop=1
+	ws=""
+	IFS=':' read -a array <<< $(bspc control --get-status)
+	for item in "${array[@]}"
+	do
+		name=${item#?}
+		if [ "$item" == "LT" ]
+		then
+			ws="${ws}%{S+}"
+		else
+			desk=""
+			case $item in
+				O*) # focused occupied
+					desk="%{R} ${name} %{R}"
+				;;
+				F*) # focused free
+					desk="%{R} ${name} %{R}"
+				;;
+				U*) # focused urgent
+					desk="%{R} ${name} %{R}"
+				;;
+				o*) # occupied
+					desk=" ${name} "
+				;;
+				f*) # free
+					desk=" ${name} "
+				;;
+				u*) # urgent
+					desk=" {$name} "
+				;;
+			esac
+			shift
+			if [ "$desk" != "" ]
+			then
+				ws="${ws}%{A:bspc desktop -f ^$desktop:}${desk}%{A}"
+				desktop=$((desktop+1))
+			fi
+		fi
+	done
+	ws="${ws}${S0}"
+	echo "${ws}"
+}
+
+panel_title() {
+	title=""
+	case $(bspc query -M -m focused) in
+		DP-2)
+			title="%{S0}"
+		;;
+		DP-4)
+			title="%{S1}"
+		;;
+		esac
+	echo "${title}$(xtitle)${S0}"
+}
+
+panel_sound() {
+	volume=$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)
+	if [ "$volume" == "0" ]
+	then
+		icon="🔇" #Mute
+	elif ((0 < volume && volume <= 33))
+	then
+		icon="🔈" #No Soundbar
+	elif ((33 < volume && volume <= 66))
+	then
+		icon="🔉" #One Soundbar
+	else
+		icon="🔊" #Three Soundbars
+	fi	
+	echo "%{A4:amixer set Master 10%+ > /dev/null:}%{A5:amixer set Master 10%- > /dev/null:}%{A:$XDG_CONFIG_HOME/panel/popup_sound &:}%{B#ffC1C7BF}%{F#fff3f3f3} $icon %{F-}%{B-}%{A}%{A}%{A}"
+}
+
+panel_hostname() {
+	echo "%{A:$XDG_CONFIG_HOME/panel/popup_power &:}%{B#ff93a1a1}%{F#fff3f3f3} $(hostname) %{F-}%{B-}%{A}"
+}
+
+panel_clock() {
+	echo "%{A:$XDG_CONFIG_HOME/panel/popup_cal &:}%{B#ff657b83}%{F#fff3f3f3} $(date +'%a %-I:%M %p') %{A}%{F-}%{B-}"
+}
+
+# print to panel
+
+while [ "$(pidof bspwm)" != "" ]; do
+	echo "%{l}$(panel_workspaces)" \
+			 "%{c}$(panel_title)" \
+			 "%{Sl}%{r}$(panel_sound)$(panel_hostname)$(panel_clock)"
+	sleep 0.1s
+done

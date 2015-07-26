@@ -1,0 +1,89 @@
+#!/bin/bash
+
+if [ "$(pgrep dzen2)" = "" ]
+then
+	swidth="$(xdpyinfo | grep  -oP " dimensions: +\K[0-9]+(?=x[0-9]+.*)")"
+	width="180"
+	offset="110"
+
+	if [ "$(playerctl status)" = "Connection to player failed: No players found" ]
+	then
+		lines=0
+	else
+		players="$(playerctl -l | wc -l)" 
+		lines="$(( $players * 4 ))"
+	fi	
+
+	(while true
+	do
+		curvol=$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)
+		slider="^tw()^ca(4,amixer set Master 10%+ > /dev/null)^ca(5,amixer set Master 10%- > /dev/null)^ca(1,amixer set Master 0% > /dev/null)^fn(DejaVu Mono)I^ca()"
+		for i in {0..10}
+		do
+			if [ "$i" == "$((curvol/10))" ]
+			then
+				marker="o"
+			else
+				marker="━"
+			fi
+			slider="${slider}^ca(1,amixer set Master $((i*10))% > /dev/null)$marker^ca()"
+		done
+
+		slider="${slider}^ca(1,amixer set Master 100% > /dev/null)I^fn()^ca()^ca()^ca()"
+	
+		echo $slider
+		
+		for ((i=1;i<=$players;i++))
+		do
+			playername[$i]="$(playerctl -l | sed -n ${i}p)"
+			metadata="$(playerctl -p ${playername[$i]} metadata)" 
+			if [ "$metadata" != "{}" ]
+			then
+				songname[$i]="$(echo $metadata | sed "s/.* 'xesam:artist': <\['\(.*\)'\]>,.* 'xesam:title': <'\(.*\)'>,.*/\1: \2/")"
+			else
+				songname[$i]="Not Playing"
+			fi
+			overlength=$((${#songname[$i]}-25))
+			if (($overlength > 0))
+			then
+				songname[$i]="  ${songname[$i]}  "
+				if [ "${step[$i]}" = "" ]
+				then
+					step[$i]="1"
+				fi
+				((scroll[$i]=scroll[$i]+step[$i]))	
+
+				if ((scroll[$i] >= (${#songname[$i]} - 24)))
+				then
+					step[$i]="-1"
+				fi
+				if ((scroll[$i] <= 1))
+				then
+					step[$i]="1"
+				fi
+				songname[$i]="$(expr substr "${songname[$i]}" "${scroll[$i]}" "25")"
+			fi
+			buttons[$i]="^fn(Symbola)^ca(1,playerctl -p ${playername[$i]} previous)⏪^ca()  ^ca(1,playerctl -p ${playername[$i]} play-pause)"
+			if [ "$(playerctl -p ${playername[$i]} status)" = "Playing" ]
+			then
+				buttons[$i]="${buttons[$i]}⏸"
+			else
+				buttons[$i]="${buttons[$i]}⏵"
+			fi
+			buttons[$i]="${buttons[$i]}^ca()  ^ca(1,playerctl -p ${playername[$i]} next)⏩^ca()^fn()"
+
+			playername[$i]=${playername[$i]^}
+		done
+
+		for ((i=1;i<=$players;i++))
+		do
+			echo 
+			echo ${playername[$i]}
+			echo ${songname[$i]}
+			echo ${buttons[$i]}
+		done
+		sleep 0.2
+	done) | dzen2 -p -x "$((swidth-width-offset))" -y "25" -w "$width" -sa "c" -l "$lines" -e "onstart=uncollapse,unhide;button4=;button5=" -fn "Inconsolata" -fg "#f3f3f3" -bg "#C1C7BF"
+else
+	killall dzen2
+fi

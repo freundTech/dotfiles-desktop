@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ "$(pgrep dzen2)" = "" ]
+then
+    swidth="$(xdpyinfo | grep  -oP " dimensions: +\K[0-9]+(?=x[0-9]+.*)")"
+    width="180"
+    today=$(expr `date +'%d'` + 0)
+    cal | sed "s/\($today\)/^fg(#657b83)^bg(#f3f3f3)\1^fg()^bg()/g" | dzen2 -p -x "$((swidth-width))" -y "25" -w "$width" -sa "c" -l 7 -e "onstart=uncollapse,unhide" -fn "Inconsolata" -fg "#f3f3f3" -bg "#657b83"
+else
+    killall dzen2
+fi
