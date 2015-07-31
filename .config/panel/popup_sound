@@ -39,7 +39,7 @@ then
 			metadata="$(playerctl -p ${playername[$i]} metadata)" 
 			if [ "$metadata" != "{}" ]
 			then
-				songname[$i]="$(echo $metadata | sed "s/.* 'xesam:artist': <\['\(.*\)'\]>,.* 'xesam:title': <'\(.*\)'>,.*/\1: \2/")"
+				songname[$i]="$(echo $metadata | sed "s/.* 'xesam:artist': <\[['\"]\(.*\)['\"]\]>,.* 'xesam:title': <['\"]\(.*\)['\"]>,.*/\1: \2/")"
 			else
 				songname[$i]="Not Playing"
 			fi
