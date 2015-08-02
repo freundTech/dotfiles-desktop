@@ -5,7 +5,6 @@ then
     swidth="$(xdpyinfo | grep  -oP " dimensions: +\K[0-9]+(?=x[0-9]+.*)")"
     width="180"
 	today=`printf "%2s" "$(expr \`date +'%d'\` + 0)"`
-	echo "$today"
 	cal | sed -e "s/\( \|^\)\($today\)\( \|$\)/\1^fg(#657b83)^bg(#f3f3f3)\2^fg()^bg()\3/g" | dzen2 -p -x "$((swidth-width))" -y "25" -w "$width" -sa "c" -l 7 -e "onstart=uncollapse,unhide" -fn "Inconsolata" -fg "#f3f3f3" -bg "#657b83"
 else
     killall dzen2
