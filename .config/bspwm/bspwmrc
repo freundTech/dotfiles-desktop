@@ -16,12 +16,6 @@ bspc config focus_by_distance   true
 bspc monitor DP-2 -d o o o o o
 bspc monitor DP-4 -d o o o o o
 
-bspc rule -a Gimp desktop=^8 follow=on floating=on
-bspc rule -a Chromium desktop=^2
-bspc rule -a mplayer2 floating=on
-bspc rule -a Kupfer.py focus=on
-bspc rule -a Screenkey manage=off
-
 $XDG_CONFIG_HOME/panel/panel &
 
 compton -b
