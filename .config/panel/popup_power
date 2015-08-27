@@ -6,10 +6,10 @@ then
 	width="120"
 	offset="80"
 	(
-	echo "^ca(1,/usr/local/bin/pixellock & killall dzen2)Lock^ca()"
-	echo "^ca(1,$XDG_CONFIG_HOME/bspwm/bspwm_logout)Logout^ca()"
-	echo "^ca(1,reboot)Reboot^ca()"
-	echo "^ca(1,poweroff)Poweroff^ca()"
+	echo "^ca(1,killall dzen2 && /usr/local/bin/pixellock)Lock^ca()"
+	echo "^ca(1,$XDG_CONFIG_HOME/bspwm/bspwm_killall && bspc quit)Logout^ca()"
+	echo "^ca(1,$XDG_CONFIG_HOME/bspwm/bspwm_killall && reboot)Reboot^ca()"
+	echo "^ca(1,$XDG_CONFIG_HOME/bspwm/bspwm_killall && poweroff)Poweroff^ca()"
 
 	) | dzen2 -p -x "$((swidth-width-offset))" -y "25" -w "$width" -sa "c" -l 3 -e "onstart=uncollapse,unhide" -fn "Inconsolata" -fg "#f3f3f3" -bg "#93a1a1"
 else
