@@ -1,5 +1,9 @@
 #! /bin/sh
 
+pulseaudio --start
+
+bspc config focus_follows_pointer true
+
 bspc config border_width        0
 bspc config window_gap         40
 
@@ -16,8 +20,12 @@ bspc config focus_by_distance   true
 bspc monitor DP-2 -d o o o o o
 bspc monitor DP-4 -d o o o o o
 
+feh --bg-scale ~/Pictures/wallpaper/current.jpg
+
 $XDG_CONFIG_HOME/panel/panel &
 
-compton -b
+twmnd &
 
-feh --bg-scale ~/Pictures/wallpaper/current.jpg
+compton --backend glx --paint-on-overlay --vsync opengl-swc -b
+
+padevswitch

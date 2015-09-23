@@ -12,6 +12,7 @@ Programs used:
 * sxhkd: https://github.com/baskerville/sxhkd
 * lemonbar (fork): https://github.com/krypt-n/bar#branch=xft-port
 * dzen2 (fork): git://github.com/DaveDavenport/dzen.git
+* twmn: https://github.com/sboli/twmn
 * xtitle: https://github.com/baskerville/xtitle
 * playerctl: https://github.com/acrisci/playerctl/
 * amixer (from alsa-utils): http://www.alsa-project.org
