@@ -36,10 +36,22 @@ then
 		for ((i=1;i<=$players;i++))
 		do
 			playername[$i]="$(playerctl -l | sed -n ${i}p)"
-			metadata="$(playerctl -p ${playername[$i]} metadata)" 
+			metadata="$(playerctl -p ${playerame[$i]} metadata)"
 			if [ "$metadata" != "{}" ]
 			then
-				songname[$i]="$(echo $metadata | sed "s/.* 'xesam:artist': <\[['\"]\(.*\)['\"]\]>,.* 'xesam:title': <['\"]\(.*\)['\"]>,.*/\1: \2/")"
+				artist="$(playerctl -p ${playername[$i]} metadata artist)"
+			    song="$(playerctl -p ${playername[$i]} metadata title)"
+		    
+    		    if [[ "$artist" == "" ]]
+	    		then
+		    		artist="Unknown Artist"
+		    	fi
+	    		if [[ "$song" == "" ]]
+	    		then
+		    		song="Unknown title"
+		    	fi
+
+	            songname[$i]="$artist: $song"
 			else
 				songname[$i]="Not Playing"
 			fi
@@ -82,7 +94,7 @@ then
 			echo ${songname[$i]}
 			echo ${buttons[$i]}
 		done
-		sleep 0.2
+		sleep 0.5
 	done) | dzen2 -p -x "$((swidth-width-offset))" -y "25" -w "$width" -sa "c" -l "$lines" -e "onstart=uncollapse,unhide;button4=;button5=" -fn "Inconsolata" -fg "#f3f3f3" -bg "#C1C7BF"
 else
 	killall dzen2

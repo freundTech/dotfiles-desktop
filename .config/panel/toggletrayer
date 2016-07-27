@@ -1,0 +1,30 @@
+#!/bin/bash
+file="/tmp/panelstate-$(whoami)"
+
+if [ -a $file ]
+then
+	state="$(cat $file)"
+else
+	state=0
+fi
+
+read -a windows <<< $(xdotool search --class trayer)
+
+case $state in
+	0)
+		for window in "${windows[@]}"
+		do
+			xdotool windowmove $window 0 0
+		done
+		state=1
+		;;
+	1)
+		for window in "${windows[@]}"
+		do
+			xdotool windowmove $window 0 -25
+		done
+		state=0
+		;;
+esac
+
+echo $state > $file

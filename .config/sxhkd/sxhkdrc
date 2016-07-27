@@ -5,64 +5,55 @@
 super + alt + Escape
 	$XDG_CONFIG_HOME/bspwm/bspwm_logout
 
-super + w
-	bspc window -c
-
-super + t
-	bspc desktop -l next
-
-super + b
-	bspc desktop -B
+super + {_,shift + }w
+	bspc node -{c,k}
 
 super + {s,f}
-	bspc window -t {floating,fullscreen}
+	bspc node -t {~floating,~fullscreen}
 
 super + {grave,Tab}
-	bspc {window,desktop} -f last
+	bspc {node,desktop} -f last
 
 super + apostrophe
-	bspc window -s last
+	bspc node -s last
 
 super + {o,i}
-	bspc control --record-history off; \
-	bspc window {older,newer} -f; \
-	bspc control --record-history on
+	bspc wm -h off; \
+	bspc node {older,newer} -f; \
+	bspc wm -h on
 
-super + y
-	bspc window -w last.manual
-
-super + m
-	bspc window -s biggest
+super + g
+	bspc node -s biggest
 
 super + {_,shift + }{Left,Down,Up,Right}
-	bspc window -{f,s} {left,down,up,right}
+	bspc node -{f,s} {west,south,north,east}
 
 super + {_,shift + }c
-	bspc window -f {next,prev}
-
-super + {comma,period}
-	bspc desktop -C {backward,forward}
+	bspc node -f {next,prev}
 
 super + bracket{left,right}
 	bspc desktop -f {prev,next}
 
 super + ctrl + {Left,Down,Up,Right}
-	bspc window -p {left,down,up,right}
+	bspc node -p ~{west,south,north,east}
 
 super + ctrl + {_,shift + }space
-	bspc {window -p cancel,desktop -c}
+	bspc {node -p cancel,desktop -c}
 
 super + alt + {Left,Down,Up,Right}
-	bspc window -e {left -10,down +10,up -10,right +10}
+	bspc node {@west -r -10,@south -r +10,@north -r -10,@east -r +10}
 
 super + alt + shift + {Left,Down,Up,Right}
-	bspc window -e {right -10,up +10,down -10,left +10}
-
-super + ctrl + {1-9}
-	bspc window -r 0.{1-9}
+	bspc node {@east -r -10,@north -r +10,@south -r -10,@west -r +10}
 
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,window -d} ^{1-9,10}
+	bspc {desktop -f,node -d} ^{1-9,10}
+
+super + mod5 + {Left,Down,Up,Right}
+	bspc node @focused:/ -R {270,180,180,90}
+
+super + mod5 + shift + {Left,Down,Up,Right}
+	bspc node @focused:/ -F {vertical,horizontal,horizontal,vertical}
 
 ~button1
 	bspc pointer -g focus
@@ -110,11 +101,20 @@ XF86HomePage
 # wm independent hotkeys
 #
 
+button12
+    xinput set-float-prop "Mad Catz Mad Catz R.A.T.9 Wireless Mouse" "Device Accel Constant Deceleration" 2
+
+@button12
+    xinput set-float-prop "Mad Catz Mad Catz R.A.T.9 Wireless Mouse" "Device Accel Constant Deceleration" 1
+
 super + Return
 	urxvt
 
 super + space
 	dmenu_run -q -h 25 -fn "Inconsolata-12:normal" -nb "#f3f3f3" -nf "#657b83" -sb "#657b83" -sf "#f3f3f3" -dim 0.6 -o .9 -p "o"
+
+super + alt + space
+	$XDG_CONFIG_HOME/panel/toggletrayer
 
 # make sxhkd reload its configuration files:
 super + Escape

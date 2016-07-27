@@ -1,6 +1,8 @@
 #! /bin/sh
 
-pulseaudio --start
+xsetroot -cursor_name left_ptr &
+
+sxhkd &
 
 bspc config focus_follows_pointer true
 
@@ -17,6 +19,10 @@ bspc config borderless_monocle  true
 bspc config gapless_monocle     true
 bspc config focus_by_distance   true
 
+bspc rule -a trayer private=o 
+
+#bspc monitor DVI-I-1 -d o o o o o
+
 bspc monitor DP-2 -d o o o o o
 bspc monitor DP-4 -d o o o o o
 
@@ -26,6 +32,24 @@ $XDG_CONFIG_HOME/panel/panel &
 
 twmnd &
 
-compton --backend glx --paint-on-overlay --vsync opengl-swc -b
+mpd .config/mpd/mpd.conf
+mpDris2 &
+
+trayer --height 25 --width 3840 --edge top --transparent true --alpha 52 --tint 0xf3f3f3 --SetDockType false &
+
+compton --config ~/.compton.conf &
+
+/usr/lib/mate-polkit/polkit-mate-authentication-agent-1&
+roccateventhandler &
+
+windows=()
+while [ "${#windows[@]}" -lt 2 ]
+do
+	read -a windows <<< $(xdotool search --class trayer)
+done
+for window in "${windows[@]}"
+do
+	xdotool windowmove $window 0 -25
+done
 
 padevswitch
