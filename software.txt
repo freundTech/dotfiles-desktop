@@ -1,0 +1,13 @@
+bspwm
+sxhkd
+feh
+compton
+urxvt
+ttf-inconsolata
+dzen2
+playerctl
+
+lemonbar-xft-git
+xtitle
+numix-icon-theme-git
+numix-folders-git

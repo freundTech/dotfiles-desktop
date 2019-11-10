@@ -12,7 +12,7 @@ set shiftwidth=4
 
 "Navigation
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
-noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')\
+noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 "Search
 set incsearch

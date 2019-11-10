@@ -55,15 +55,6 @@ super + mod5 + {Left,Down,Up,Right}
 super + mod5 + shift + {Left,Down,Up,Right}
 	bspc node @focused:/ -F {vertical,horizontal,horizontal,vertical}
 
-~button1
-	bspc pointer -g focus
-
-super + button{1-3}
-	bspc pointer -g {move,resize_side,resize_corner}
-
-super + @button{1-3}
-	bspc pointer -u
-
 #
 # media keys
 #
@@ -101,17 +92,12 @@ XF86HomePage
 # wm independent hotkeys
 #
 
-button12
-    xinput set-float-prop "Mad Catz Mad Catz R.A.T.9 Wireless Mouse" "Device Accel Constant Deceleration" 2
-
-@button12
-    xinput set-float-prop "Mad Catz Mad Catz R.A.T.9 Wireless Mouse" "Device Accel Constant Deceleration" 1
-
 super + Return
 	urxvt
 
 super + space
-	dmenu_run -q -h 25 -fn "Inconsolata-12:normal" -nb "#f3f3f3" -nf "#657b83" -sb "#657b83" -sf "#f3f3f3" -dim 0.6 -o .9 -p "o"
+	rofi -show run
+	#dmenu_run -q -h 25 -fn "Inconsolata-12:normal" -nb "#f3f3f3" -nf "#657b83" -sb "#657b83" -sf "#f3f3f3" -dim 0.6 -o .9 -p "o"
 
 super + alt + space
 	$XDG_CONFIG_HOME/panel/toggletrayer

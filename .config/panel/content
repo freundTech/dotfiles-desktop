@@ -6,7 +6,7 @@ source $XDG_CONFIG_HOME/panel/colors
 panel_workspaces() {
 	desktop=1
 	ws=""
-	IFS=':' read -a array <<< $(bspc wm --get-status)
+	IFS=':' read -a array <<< $1
 	for item in "${array[@]}"
 	do
 		name=${item#?}
@@ -35,7 +35,7 @@ panel_workspaces() {
 					desk=" {$name} "
 				;;
 			esac
-			shift
+
 			if [ "$desk" != "" ]
 			then
 				ws="${ws}%{A:bspc desktop -f ^$desktop:}${desk}%{A}"
@@ -50,10 +50,10 @@ panel_workspaces() {
 panel_title() {
 	title=""
 	case $(bspc query -M -m focused) in
-		DP-2)
+		0x00400002)
 			title="%{S0}"
 		;;
-		DP-4)
+		0x00400004)
 			title="%{S1}"
 		;;
 		esac
@@ -64,15 +64,15 @@ panel_sound() {
 	volume=$(amixer -q | grep -A5 Master | grep '%' | cut -d'[' -f2 | cut -d'%' -f1)
 	if [ "$volume" == "0" ]
 	then
-		icon="🔇" #Mute
+		icon="\ufc5d" #Mute
 	elif ((0 < volume && volume <= 33))
 	then
-		icon="🔈" #No Soundbar
+		icon="\ufa7e" #No Soundbar
 	elif ((33 < volume && volume <= 66))
 	then
-		icon="🔉" #One Soundbar
+		icon="\ufa7f" #One Soundbar
 	else
-		icon="🔊" #Three Soundbars
+		icon="\ufa7d" #Three Soundbars
 	fi	
 	echo "%{A4:amixer set Master 10%+ > /dev/null:}%{A5:amixer set Master 10%- > /dev/null:}%{A:$XDG_CONFIG_HOME/panel/popup_sound &:}%{B#ffC1C7BF}%{F#fff3f3f3} $icon %{F-}%{B-}%{A}%{A}%{A}"
 }
@@ -85,11 +85,52 @@ panel_clock() {
 	echo "%{A:$XDG_CONFIG_HOME/panel/popup_cal &:}%{B#ff657b83}%{F#fff3f3f3} $(date +'%a %-I:%M %p') %{A}%{F-}%{B-}"
 }
 
-# print to panel
+watch_workspaces() {
+	bspc subscribe | while read line
+	do
+		panel_workspaces $line > $WORKSPACES_FILE
+		panel_title > $TITLE_FILE
+		print_panel
+	done
+}
 
-while [ "$(pidof bspwm)" != "" ]; do
-	echo "%{l}$(panel_workspaces)" \
-			 "%{c}$(panel_title)" \
-			 "%{Sl}%{r}$(panel_sound)$(panel_hostname)$(panel_clock)"
-	sleep 0.1s
-done
+watch_sound() {
+	pactl subscribe | grep --line-buffered "'change' on sink" | while read line
+	do
+		panel_sound > $SOUND_FILE
+		print_panel
+	done	
+}
+
+watch_clock() {
+	while true
+	do
+		sleep $(expr 60 - $(date +%S))
+		panel_clock > $CLOCK_FILE
+		print_panel
+	done
+}
+
+# print to panel
+print_panel() {
+	echo -e "%{l}$(cat $WORKSPACES_FILE)" \
+		"%{c}$(cat $TITLE_FILE)" \
+		"%{Sl}%{r}$(cat $SOUND_FILE)${HOSTNAME}$(cat $CLOCK_FILE)"
+}
+
+WORKSPACES_FILE=$(mktemp)
+TITLE_FILE=$(mktemp)
+SOUND_FILE=$(mktemp)
+CLOCK_FILE=$(mktemp)
+
+panel_workspaces $(bspc wm --get-status) > $WORKSPACES_FILE
+panel_title > $TITLE_FILE
+panel_sound > $SOUND_FILE
+panel_clock > $CLOCK_FILE
+HOSTNAME=$(panel_hostname)
+
+print_panel
+
+watch_sound &
+watch_clock &
+watch_workspaces

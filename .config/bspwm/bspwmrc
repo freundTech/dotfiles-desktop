@@ -5,6 +5,7 @@ xsetroot -cursor_name left_ptr &
 sxhkd &
 
 bspc config focus_follows_pointer true
+bspc config click_to_focus true
 
 bspc config border_width        0
 bspc config window_gap         40
@@ -19,16 +20,16 @@ bspc config borderless_monocle  true
 bspc config gapless_monocle     true
 bspc config focus_by_distance   true
 
-bspc rule -a trayer private=o 
+bspc rule -a trayer private=o
 
 #bspc monitor DVI-I-1 -d o o o o o
 
 bspc monitor DP-2 -d o o o o o
 bspc monitor DP-4 -d o o o o o
 
-feh --bg-scale ~/Pictures/wallpaper/current.jpg
+feh --bg-scale $HOME/.local/share/backgrounds/colorful-triangles-background.jpg
 
-$XDG_CONFIG_HOME/panel/panel &
+$HOME/.config/panel/panel &
 
 twmnd &
 
@@ -41,15 +42,3 @@ compton --config ~/.compton.conf &
 
 /usr/lib/mate-polkit/polkit-mate-authentication-agent-1&
 roccateventhandler &
-
-windows=()
-while [ "${#windows[@]}" -lt 2 ]
-do
-	read -a windows <<< $(xdotool search --class trayer)
-done
-for window in "${windows[@]}"
-do
-	xdotool windowmove $window 0 -25
-done
-
-padevswitch

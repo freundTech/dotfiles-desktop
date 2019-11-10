@@ -1,16 +1,19 @@
 #!/bin/sh
 
+if [ -z ${XDG_CONFIG_HOME+x} ] ; then
+	export XDG_CONFIG_HOME="$HOME/.config"
+fi
+
 if [ $(pgrep -cx panel) -gt 1 ] ; then
 	printf "%s\n" "The panel is already running." >&2
 	exit 1
 fi
 
-trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
-
 source $XDG_CONFIG_HOME/panel/config
 source $XDG_CONFIG_HOME/panel/colors
 
-$XDG_CONFIG_HOME/panel/top | lemonbar -p \
+$XDG_CONFIG_HOME/panel/content | lemonbar -p \
+	-a 20 \
 	-g "$PANEL_HEIGHT" \
 	-u "$PANEL_UNDERLINE" \
 	-f "$PANEL_FONT" \

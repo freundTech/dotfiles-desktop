@@ -2,7 +2,7 @@ urxvt*.perl-lib: /usr/lib/urxvt/perl
 urxvt*.perl-ext-common: default,matcher,clipboard
 urxvt*.perl-matcher: 1
 urxvt*.matcher-button: 3
-urxvt*.url-launcher: /usr/bin/chromium
+urxvt*.url-launcher: /usr/bin/qutebrowser
 !urxvt*.matcher.button: 1
 !urxvt*.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 
@@ -43,10 +43,10 @@ urxvt*.background: [75]#f3f3f3
 !urxvt*.shading: 175
 
 ! font
-urxvt*.font: xft:Inconsolata:size=12:antialias=true
-urxvt*.boldFont: xft:Inconsolata:style=bold:size=12:antialias=true
-urxvt*.italicFont: xft:Inconsolata:style=italic:size=12:antialias=true
-urxvt*.boldItalicFont: xft:Inconsolata:style=bolditalic:size=12:antialias=true
+urxvt*.font: xft:Inconsolata Nerd Font Mono:size=12:antialias=true
+urxvt*.boldFont: xft:Inconsolata Nerd Font Mono:style=bold:size=12:antialias=true
+urxvt*.italicFont: xft:Inconsolata Nerd Font Mono:style=italic:size=12:antialias=true
+urxvt*.boldItalicFont: xft:Inconsolata Nerd Font Mono:style=bolditalic:size=12:antialias=true
 
 *background: #002b36
 *foreground: #657b83
