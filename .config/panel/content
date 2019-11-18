@@ -57,7 +57,7 @@ panel_title() {
 			title="%{S1}"
 		;;
 		esac
-	echo "${title}$(xtitle)${S0}"
+	echo "${title}$1${S0}"
 }
 
 panel_sound() {
@@ -89,9 +89,16 @@ watch_workspaces() {
 	bspc subscribe | while read line
 	do
 		panel_workspaces $line > $WORKSPACES_FILE
-		panel_title > $TITLE_FILE
 		print_panel
 	done
+}
+
+watch_title() {
+    xtitle -s | while read line
+    do
+        panel_title $line > $TITLE_FILE
+        print_panel
+    done
 }
 
 watch_sound() {
@@ -99,7 +106,7 @@ watch_sound() {
 	do
 		panel_sound > $SOUND_FILE
 		print_panel
-	done	
+	done
 }
 
 watch_clock() {
@@ -124,7 +131,7 @@ SOUND_FILE=$(mktemp)
 CLOCK_FILE=$(mktemp)
 
 panel_workspaces $(bspc wm --get-status) > $WORKSPACES_FILE
-panel_title > $TITLE_FILE
+panel_title $(xtitle) > $TITLE_FILE
 panel_sound > $SOUND_FILE
 panel_clock > $CLOCK_FILE
 HOSTNAME=$(panel_hostname)
@@ -133,4 +140,5 @@ print_panel
 
 watch_sound &
 watch_clock &
-watch_workspaces
+watch_workspaces &
+watch_title
