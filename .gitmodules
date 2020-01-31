@@ -1,0 +1,27 @@
+[submodule ".vim/pack/dotfiles/start/vim-surround"]
+	path = .vim/pack/dotfiles/start/vim-surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule ".vim/pack/dotfiles/start/ale"]
+	path = .vim/pack/dotfiles/start/ale
+	url = https://github.com/dense-analysis/ale.git
+[submodule ".vim/pack/dotfiles/start/CamelCaseMotion"]
+	path = .vim/pack/dotfiles/start/CamelCaseMotion
+	url = https://github.com/bkad/CamelCaseMotion.git
+[submodule ".vim/pack/dotfiles/start/Colorizer"]
+	path = .vim/pack/dotfiles/start/Colorizer
+	url = https://github.com/chrisbra/Colorizer.git
+[submodule ".vim/pack/dotfiles/start/delimitMate"]
+	path = .vim/pack/dotfiles/start/delimitMate
+	url = https://github.com/Raimondi/delimitMate.git
+[submodule ".vim/pack/dotfiles/start/supertab"]
+	path = .vim/pack/dotfiles/start/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule ".vim/pack/dotfiles/start/vim-better-whitespace"]
+	path = .vim/pack/dotfiles/start/vim-better-whitespace
+	url = https://github.com/ntpeters/vim-better-whitespace.git
+[submodule ".vim/pack/dotfiles/start/vim-commentary"]
+	path = .vim/pack/dotfiles/start/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git
+[submodule ".vim/pack/dotfiles/start/vim-repeat"]
+	path = .vim/pack/dotfiles/start/vim-repeat
+	url = https://github.com/tpope/vim-repeat.git

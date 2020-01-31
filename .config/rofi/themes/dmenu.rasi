@@ -1,0 +1,57 @@
+/**
+ * ROFI Color theme
+ * User: Adrian
+ * Copyright: Dave Davenport & Adrian Freund
+ */
+* {
+    background-color:      rgba ( 243, 243, 243, 80 % );
+    text-color:            rgba (101, 123, 131, 100 % );
+    font:            "Inconsolata Nerd Font 11";
+	padding: 0px;
+	margin: 0px;
+	height:		25px;
+}
+
+window {
+    anchor:     north;
+	location:	north;
+	transparency: "real";
+    width:      100%;
+    children:   [ horibox ];
+}
+
+horibox {
+    orientation: horizontal;
+    children:   [ textbox-prompt, entry, listview ];
+}
+
+textbox-prompt {
+	str: " o ";
+	expand: false;
+    text-color:			rgba ( 243, 243, 243, 100 % );
+    background-color:	rgba (101, 123, 131, 80 % );
+	padding: 5px;
+}
+
+listview {
+	height: 24px;
+    layout:     horizontal;
+	scrollbar:	false;
+    spacing:    0px;
+    lines:      100;
+}
+
+entry {
+    expand:     false;
+    width:      10em;
+	padding: 5px;
+}
+
+element {
+	height: 25px;
+    padding: 5px;
+}
+element selected {
+    text-color:			rgba ( 243, 243, 243, 100 % );
+    background-color:	rgba (101, 123, 131, 80 % );
+}

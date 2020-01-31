@@ -96,7 +96,7 @@ watch_workspaces() {
 watch_title() {
     xtitle -s | while read line
     do
-        panel_title $line > $TITLE_FILE
+        panel_title "$line" > $TITLE_FILE
         print_panel
     done
 }
@@ -131,7 +131,7 @@ SOUND_FILE=$(mktemp)
 CLOCK_FILE=$(mktemp)
 
 panel_workspaces $(bspc wm --get-status) > $WORKSPACES_FILE
-panel_title $(xtitle) > $TITLE_FILE
+panel_title "$(xtitle)" > $TITLE_FILE
 panel_sound > $SOUND_FILE
 panel_clock > $CLOCK_FILE
 HOSTNAME=$(panel_hostname)

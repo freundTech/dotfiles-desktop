@@ -247,9 +247,11 @@ keycode 253 =
 keycode 254 =
 keycode 255 =
 
-keycode 66 = Mode_switch Multi_key
-keycode 117 = Mode_switch Multi_key
-keycode 39 = s S ssharp
+keycode 66 = Mode_switch Mode_switch
+keycode 39 = s S ssharp U1E9E
 keycode 38 = a A adiaeresis Adiaeresis
 keycode 30 = u U udiaeresis Udiaeresis
 keycode 32 = o O odiaeresis Odiaeresis
+keycode 57 = n N ntilde Ntilde
+keycode 26 = e E EuroSign
+keycode 105 = Multi_key Multi_key Multi_key Multi_key

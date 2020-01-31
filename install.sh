@@ -1,5 +1,8 @@
+DIR="$HOME/.dotfiles"
+
 install() {
-    cp --parents $1 $HOME
+    mkdir --parents $(dirname "${HOME}/$1")
+    ln -sf "${DIR}/$1" "${HOME}/$1"
 }
 
 keyboard() {
@@ -7,23 +10,25 @@ keyboard() {
 }
 
 shell() {
-	install .bashrc
-	install .profile
+    install .bashrc
+    install .profile
 }
 
 vim() {
     install .vimrc
+    install .vim/pack/dotfiles
 }
 
 ui() {
     bspwm
     sxhkd
-	bar
+    bar
     twmn
-    compton
+    picom
     xresources
-	theme
-	background
+    theme
+    background
+    rofi
 }
 
 bspwm() {
@@ -36,21 +41,21 @@ sxhkd() {
 }
 
 bar() {
-	install .config/panel/panel
-	install .config/panel/colors
-	install .config/panel/config
-	install .config/panel/popup_cal
-	install .config/panel/popup_sound
-	install .config/panel/popup_power
-	install .config/panel/content
+    install .config/panel/panel
+    install .config/panel/colors
+    install .config/panel/config
+    install .config/panel/popup_cal
+    install .config/panel/popup_sound
+    install .config/panel/popup_power
+    install .config/panel/content
 }
 
 twmn() {
     install .config/twmn/twmn.conf
 }
 
-compton() {
-    install .compton.conf
+picom() {
+    install .picom.conf
 }
 
 xresources() {
@@ -58,16 +63,27 @@ xresources() {
 }
 
 theme() {
-	install .config/numix-folders
-	echo "Trying to set up numix folders. This might need root permissions"
-	numix-folders -p
+    install .config/numix-folders
+    echo "Trying to set up numix folders. This might need root permissions"
+    #numix-folders -p
 }
 
 background() {
-	install .local/share/backgrounds/colorful-triangles-background.jpg
+    install .local/share/backgrounds/colorful-triangles-background.jpg
+}
+
+rofi() {
+    install .config/rofi/config.rasi
+    install .config/rofi/themes/dmenu.rasi
+}
+
+bin() {
+    install .bin/fixbar
+    install .bin/rxvt
 }
 
 keyboard
 shell
 vim
 ui
+bin

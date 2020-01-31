@@ -1,0 +1,8 @@
+#!/bin/sh
+for lemonbar in $(xdo id -n lemonbar)
+do
+	for root in $(xdo id -n root)
+	do
+		xdo above -t $root $lemonbar
+	done
+done

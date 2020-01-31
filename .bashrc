@@ -11,7 +11,7 @@ PS1='[\u@\h \W]\$ '
 XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CONFIG_HOME
 
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.bin:$PATH"
 
 if [ -f "$HOME/.bash_aliases" ]; then
 	source "$HOME/.bash_aliases"
@@ -23,9 +23,9 @@ fi
 #XMODIFIERS="@im=none"
 #GTK_IM_MODULE=xim
 #QT_IM_MODULE=xim
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
+export GTK_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export QT_IM_MODULE=fcitx
 
 
 #setxkbmap -option compose:ralt
@@ -42,10 +42,5 @@ export DEVKITARM=$DEVKITPRO/devkitARM
 export PATH=$PATH:$DEVKITARM/bin
 export CTRULIB=/opt/devkitpro/libctru/
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="/home/adrian/.gem/ruby/2.4.0/bin:$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
 #eval "$(ssh-agent -s)"
-
-# added by travis gem
-[ -f /home/adrian/.travis/travis.sh ] && source /home/adrian/.travis/travis.sh
