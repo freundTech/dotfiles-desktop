@@ -25,3 +25,6 @@
 [submodule ".vim/pack/dotfiles/start/vim-repeat"]
 	path = .vim/pack/dotfiles/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
+[submodule ".vim/pack/dotfiles/start/nerdtree"]
+	path = .vim/pack/dotfiles/start/nerdtree
+	url = https://github.com/preservim/nerdtree

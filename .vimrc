@@ -26,3 +26,6 @@ let g:camelcasemotion_key=','
 
 "delimitMate
 let delimitMate_expand_cr=1
+
+"nerdtree
+map <C-n> :NERDTreeToggle<CR>
