@@ -19,6 +19,10 @@ noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 set incsearch
 set hlsearch
 
+"Windows
+set splitright
+set splitbelow
+
 "Plugins
 
 "CamelCaseMotion
