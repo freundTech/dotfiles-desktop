@@ -28,3 +28,6 @@
 [submodule ".vim/pack/dotfiles/start/nerdtree"]
 	path = .vim/pack/dotfiles/start/nerdtree
 	url = https://github.com/preservim/nerdtree
+[submodule ".vim/pack/dotfiles/start/vimtex"]
+	path = .vim/pack/dotfiles/start/vimtex
+	url = https://github.com/lervag/vimtex.git
